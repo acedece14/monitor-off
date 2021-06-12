@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.onslip.gradle-one-jar" version "1.0.5"
+    id "edu.sc.seis.launch4j" version "2.4.9"
+}
+
+group 'by.katz'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+def dirForJars = "../../ready/"
+def mainClassNameStr = "by.katz.Main"
+
+task awesomeFunJar(type: OneJar) {
+    mainClass = mainClassNameStr
+    mkdir(dirForJars)
+    archiveName = dirForJars + mainClass + ".jar"
+}
+
+launch4j {
+    headerType = 'gui'
+    outfile = dirForJars + 'MonitorPowerOff.exe'
+    jar = dirForJars + mainClassNameStr + ".jar"
+    //icon = "${projectDir}\\myApp.ico"
+    //icon = "d:\\workspace\\MonitorOff\\src\\main\\resources\\app.ico"
+    println "Icon size: " + new File(icon).length() + " " + new File(icon).getCanonicalFile()
+}
+
+dependencies {
+    //compile group: 'com.1stleg', name: 'jnativehook', version: '2.0.2'
+    //compile group: 'com.healthmarketscience.jackcess', name: 'jackcess', version: '2.1.9'
+
+    //ompile group: 'net.java.dev.jna', name: 'jna', version: '4.0.0'
+    //compile group: 'net.java.dev.jna', name: 'jna-platform', version: '4.0.0'
+
+    implementation group: 'net.java.dev.jna', name: 'jna', version: '4.0.0'
+    implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '4.0.0'
+
+    //compile group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
+    //compile 'com.intellij:forms_rt:6.0.5'
+}
