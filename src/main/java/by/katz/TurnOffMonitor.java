@@ -30,13 +30,23 @@ public class TurnOffMonitor {
 
     public static void main(String[] args) {
 
-        try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException ignored) {}
-
-        user32.SendMessageA(WinUser.HWND_BROADCAST, WinUser.WM_SYSCOMMAND,
-                User32.SC_MONITORPOWER, new WinDef.LPARAM(User32.SC_MONITOR_OFF));
-
+        new Thread(() -> {
+            waitSomeTime();
+            waitSomeTime();
+            System.exit(0);
+        }).start();
+        waitSomeTime();
+        turnOffMonitor();
 
 /*        user32.SendMessageA(WinUser.HWND_BROADCAST, WinUser.WM_SYSCOMMAND,
                 User32.SC_MONITORPOWER, new WinDef.LPARAM(User32.SC_MONITOR_ON));*/
+    }
+
+    private static void turnOffMonitor() {
+        user32.SendMessageA(WinUser.HWND_BROADCAST, WinUser.WM_SYSCOMMAND, User32.SC_MONITORPOWER, new WinDef.LPARAM(User32.SC_MONITOR_OFF));
+    }
+
+    private static void waitSomeTime() {
+        try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException ignored) {}
     }
 }
